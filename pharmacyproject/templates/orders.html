@@ -1,0 +1,110 @@
+{% extends "base.html" %} 
+{% block title %} 
+Order-Products/Medicines 
+{% endblock title %} 
+{% block body %}
+
+<div class="container mt-2">
+  <h2 class="display-4">Order Now 10% Discount</h2>
+  {% include "messages.html" %}  
+  <div class="card bg-light p-4" style="width: 30rem">
+    <div class="card-body">
+      <form action="orders" method="post">
+        {% csrf_token %}
+
+        <div class="form-group">
+          <label for="name">Full Name</label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            class="form-control mb-3"
+            placeholder="Enter Your Name"
+            value="{{user.first_name}} {{user.last_name}}"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="name">Email</label>
+          <input
+            type="text"
+            id="email"
+            name="email"
+            class="form-control mb-3"
+            value="{{user.username}}"
+            required
+          />
+        </div>
+
+        <div class="form-group">
+            <label for="items">Select Medicines/Products</label>
+            <select id="items" class="form-control" name="items">
+              <option selected>Choose...</option>
+
+          
+              {% for i in mymed %}
+              <option value="{{i.medicine_name}}">{{i.medicine_name}}</option>
+              {% endfor %}
+              {% for j in myprod %}
+              <option value="{{j.prod_name}}">{{j.prod_name}}</option>
+              {% endfor %}
+            </select>
+          </div>
+
+        <div class="form-group">
+            <label for="quantity">Quantity?</label>
+            <select id="quantity" class="form-control" name="quantity">
+              <option selected>1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+         
+
+        
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="num">Phone Number</label>
+            <input
+              type="number"
+              id="num"
+              name="num"
+              class="form-control mb-3"
+           
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="address">Delivery Address</label>
+            <textarea
+              type="text"
+              id="address"
+              name="address"
+              class="form-control mb-3"
+           
+              required
+            /></textarea>
+          </div>
+
+          <div class="form-group form-check">
+            <input type="checkbox" class="form-check-input" id="exampleCheck1">
+            <label class="form-check-label mb-2" for="exampleCheck1">I Accept cash on delivery method</label>
+          </div>
+          <div class="d-grid gap-2">
+            <button class="btn btn-success" type="submit">Place Order</button>
+          </div>
+
+
+
+
+
+
+
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock body %}

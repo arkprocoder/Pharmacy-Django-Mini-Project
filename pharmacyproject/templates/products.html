@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title %} Products {% endblock title %}
+{% block body %}
+
+<div class="container mt-2">
+
+    <h2 class="display-4 text-success text-center">Order Products</h2>
+    <hr>
+
+
+    <div class="row">
+
+        {% for i in myprod  %}
+        <div class="col-md-4 bg-light p-5">
+            <div class="card" style="width: 20rem;">
+                <img src="{{i.prod_image.url}}" class="card-img-top" alt="...">
+                <div class="card-body">
+                  <h6 class="card-title display-4 text-primary">{{i.prod_name}}</h6> 
+                   <p class="text-success bg-light">Price : {{i.prod_price}} Rs</p>
+                  <p class="card-text">{{i.prod_descripton}}</p>
+               
+                  <p class="text-danger"><b>Expiry Date  : {{i.prod_exp}}</b></p>
+                  <a href="/orders" class="btn btn-outline-success btn-lg">Order Now</a>
+                </div>
+              </div>
+
+        </div>
+        {% endfor %}
+    </div>
+
+
+
+   
+
+
+</div>
+
+
+
+
+{% endblock body %}
+
