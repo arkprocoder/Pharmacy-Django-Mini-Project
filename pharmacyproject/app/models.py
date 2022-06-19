@@ -39,5 +39,5 @@ class MyOrders(models.Model):
     price=models.CharField(max_length=100)
     phone_num=models.CharField(max_length=10)
     delivery=models.BooleanField(default=False)
-    def __str__(self):
-        return self.email
+    def __int__(self):
+        return self.id

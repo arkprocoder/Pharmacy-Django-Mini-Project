@@ -139,9 +139,22 @@ Order-Products/Medicines
             <th scope="row">{{item.id}}</th>
             <td>{{item.name}}</td>
             <td>{{item.items}}</td>
-            <td>{{item.price}}</td>
-            <td><i class="fa-solid fa-trash-can"></i></td>
-            <td><i class="fa-solid fa-circle-check"></i></td>
+            <td>{{item.price}} {{item.delivery}}</td>
+           {% if item.delivery %}
+           <td><button type="button" class="btn-success p-2"  href="/orders/{{item.id}}" disabled> <i class="fa-solid fa-trash-can"></i></button></td>
+           
+           {% else %}
+           <td><a type="button" class="btn-danger p-2" href="/orders/{{item.id}}"> <i class="fa-solid fa-trash-can"></i></a></td>
+           {% endif %}
+
+
+            {% if item.delivery %}
+            <td><i class="fa-solid fa-circle-check"></i> Delivered</td>
+            {% else %}
+            <td> <i class="fa-solid fa-truck"></i> Not Delivered</td>
+            {% endif %}
+            
+          
           </tr>
           
           {% endfor %}

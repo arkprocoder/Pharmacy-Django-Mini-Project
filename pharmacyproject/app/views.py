@@ -160,3 +160,12 @@ def search(request):
     allPosts=allPostsMedicines.union(allPostsProducts)
     
     return render(request,"search.html",{"Med":allPostsMedicines,"Prod":allPostsProducts,"allItems":allPosts})
+
+
+
+def deleteOrder(request,id):
+    print(id)
+    query=MyOrders.objects.get(id=id)
+    query.delete()
+    messages.success(request,"Order Cancelled Successfully..")
+    return redirect("/orders")
