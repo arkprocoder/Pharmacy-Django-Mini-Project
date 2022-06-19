@@ -9,7 +9,10 @@ from app.models import Contact,Medicines,ProductItems,MyOrders
 
 
 def Home(request):
-    return render(request, "Home.html")
+    mymed=Medicines.objects.all()
+    myprod=ProductItems.objects.all()
+    context={"mymed":mymed,"myprod":myprod}
+    return render(request, "Home.html",context)
 
 
 def contact(request):
@@ -105,9 +108,19 @@ def products(request):
 
 
 def myorders(request):
+    if not request.user.is_authenticated:
+        messages.warning(request,"Please Login to place the Order....")
+        return redirect("/login")
     mymed=Medicines.objects.all()
     myprod=ProductItems.objects.all()
-    context={"myprod":myprod,"mymed":mymed}
+
+    # i am writing a logic to get the user details orders
+    current_user=request.user.username
+    # print(current_user)
+    # i am fetching the data from table MyOrders based on emailid
+    items=MyOrders.objects.filter(email=current_user)
+    print(items)
+    context={"myprod":myprod,"mymed":mymed,"items":items}
     if request.method =="POST":
         name=request.POST.get("name")
         email=request.POST.get("email")
@@ -128,10 +141,22 @@ def myorders(request):
                 price=i.prod_price
 
             pass
-        myquery=MyOrders(name=name,email=email,items=item,address=address,quantity=quan,price=price,phone_num=phone)
+
+        newPrice=int(price)*int(quan)
+        myquery=MyOrders(name=name,email=email,items=item,address=address,quantity=quan,price=newPrice,phone_num=phone)
         myquery.save()
         messages.info(request,f"Order is Successfull")
         return redirect("/orders")
 
     
     return render(request,"orders.html",context)
+
+
+def search(request):
+    query=request.GET["getdata"]
+    print(query)
+    allPostsMedicines=Medicines.objects.filter(medicine_name__icontains=query)
+    allPostsProducts=ProductItems.objects.filter(prod_name__icontains=query)
+    allPosts=allPostsMedicines.union(allPostsProducts)
+    
+    return render(request,"search.html",{"Med":allPostsMedicines,"Prod":allPostsProducts,"allItems":allPosts})

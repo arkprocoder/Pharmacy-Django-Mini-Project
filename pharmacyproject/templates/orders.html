@@ -4,10 +4,15 @@ Order-Products/Medicines
 {% endblock title %} 
 {% block body %}
 
+
+<div class="row">
+
+  <div class="col-md-4">
+    
 <div class="container mt-2">
-  <h2 class="display-4">Order Now 10% Discount</h2>
+  <h2 class="display-4">10% Discount</h2>
   {% include "messages.html" %}  
-  <div class="card bg-light p-4" style="width: 30rem">
+  <div class="card bg-light p-4">
     <div class="card-body">
       <form action="orders" method="post">
         {% csrf_token %}
@@ -67,10 +72,11 @@ Order-Products/Medicines
           <div class="form-group">
             <label for="num">Phone Number</label>
             <input
-              type="number"
+              type="tel"
               id="num"
               name="num"
               class="form-control mb-3"
+              pattern="[0-9]{3}[0-9]{3}[0-9]{4}"
            
               required
             />
@@ -93,7 +99,7 @@ Order-Products/Medicines
             <label class="form-check-label mb-2" for="exampleCheck1">I Accept cash on delivery method</label>
           </div>
           <div class="d-grid gap-2">
-            <button class="btn btn-success" type="submit">Place Order</button>
+            <button class="btn btn-dark" type="submit">Place Order</button>
           </div>
 
 
@@ -103,6 +109,51 @@ Order-Products/Medicines
 
 
       </form>
+    </div>
+  </div>
+  
+</div>
+
+  </div>
+  <div class="col-md-8">
+
+    <div class="container mt-2">
+      <h2 class="display-4">Orders</h2>
+
+      <table class="table table-danger table-striped">
+        <thead>
+          <tr>
+            <th scope="col">Order ID</th>
+            <th scope="col">Name</th>
+            <th scope="col">Products</th>
+            <th scope="col">Price</th>
+            <th scope="col">Cancel</th>
+            <th scope="col">Status</th>
+          </tr>
+        </thead>
+        <tbody>
+         
+
+          {% for item in items %}
+          <tr>
+            <th scope="row">{{item.id}}</th>
+            <td>{{item.name}}</td>
+            <td>{{item.items}}</td>
+            <td>{{item.price}}</td>
+            <td><i class="fa-solid fa-trash-can"></i></td>
+            <td><i class="fa-solid fa-circle-check"></i></td>
+          </tr>
+          
+          {% endfor %}
+         
+        </tbody>
+      </table>
+
+
+
+
+
+
     </div>
   </div>
 </div>

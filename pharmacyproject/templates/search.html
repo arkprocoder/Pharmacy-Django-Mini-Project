@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% block title %} About {% endblock title %}
+{% block body %}
+<br>
+
+<h2 class="text-center bg-dark text-success">Your Search results......</h2>
+
+<br />
+{% if allItems|length < 1%}
+
+<h1>Your Search did not match <span class="badge bg-secondary">Try Again</span></h1>
+<ul>
+<li>Make Sure You have Spelled Correct</li>
+</ul>
+{% endif %}
+
+<br />
+
+
+<div class="container mt-2">
+
+    <div class="row">
+
+        {% for i in Med  %}
+        <div class="col-md-4 bg-light p-5">
+            <div class="card" style="width: 20rem;">
+                <img src="{{i.medicine_image.url}}" class="card-img-top" alt="...">
+                <div class="card-body">
+                  <h6 class="card-title display-4 text-primary">{{i.medicine_name}}</h6> 
+                   <p class="text-success bg-light">Price : {{i.medicine_price}} Rs</p>
+                  <p class="card-text">{{i.medicine_descripton}}</p>
+               
+                  <p class="text-danger"><b>Expiry Date  : {{i.medicine_exp}}</b></p>
+                  <a href="/orders" class="btn btn-outline-success btn-lg">Order Now</a>
+                </div>
+              </div>
+
+        </div>
+        {% endfor %}
+    </div>
+  
+    <div class="row">
+
+        {% for i in Prod  %}
+        <div class="col-md-4 bg-light p-5">
+            <div class="card" style="width: 20rem;">
+                <img src="{{i.prod_image.url}}" class="card-img-top" alt="...">
+                <div class="card-body">
+                  <h6 class="card-title display-4 text-primary">{{i.prod_name}}</h6> 
+                   <p class="text-success bg-light">Price : {{i.prod_price}} Rs</p>
+                  <p class="card-text">{{i.prod_descripton}}</p>
+               
+                  <p class="text-danger"><b>Expiry Date  : {{i.prod_exp}}</b></p>
+                  <a href="/orders" class="btn btn-outline-success btn-lg">Order Now</a>
+                </div>
+              </div>
+
+        </div>
+        {% endfor %}
+    </div>
+
+
+   
+
+
+</div>
+
+
+{% endblock body %}
